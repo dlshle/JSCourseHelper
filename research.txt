@@ -1,0 +1,41 @@
+https://enroll.wisc.edu/my-courses
+	https://enroll.wisc.edu/api/search/v1/terms/ (get terms available)
+	https://enroll.wisc.edu/api/planner/v1/roadmap/TERM_CODE(acquire all courses in cart)
+	for each courseId, query https://enroll.wisc.edu/api/search/v1/enrollmentPackages/TERM_CODE/subjectCode/courseId (acquire all sections in detail)
+
+For terms:
+A list of terms available. Term code is important for acquiring advanced information of the students desired courses(course in cart&course enrolled)
+
+For roadmap/TERM_CODE
+A list of courses in cart, detailed information about individual course can be found by:
+for all courses c in list:
+	query q = https://enroll.wisc.edu/api/search/v1/enrollmentPackages/c.termCode/c.subjectCode/c.courseId
+	allCourses.put(c.details.courseDesignation, q)
+
+For each queried course(https://enroll.wisc.edu/api/search/v1/enrollmentPackages/TERM_CODE/subjectCode/courseId)
+A list of elements.
+course[i].onlineOnly(true/false)//if is online only, no need to check others
+course[i].published(true/false)
+course[i].creditRange(int)
+course[i].enrollmentOptions.waitlist(true/false)
+course[i].sections = []
+	{
+		classMeetings = [] {building:{buildingName, streetAddress}, examDate, meetingDays("M/T/...")<--can be multiple like MW--!>, meetingTimeStart, meetingTimeEnd, room, meetingType("CLASS"/"EXAM")},
+		//get building info + room and meetingTimeStart/End. If its exam, only needs examDate; If not, needs meetingDays.
+		subject = {shortDescription("COMP SCI")}
+		catalogNumber("577")
+		sectionNumber("001/326)
+		type("LEC/DIS")
+		//subject.shortDescription+catalogNumber+type+sectionNumber = "COMP SCI LEC 001"
+	}
+
+
+Research:
+Check meetingTime and meetingDate mechanism:
+69600000-72600000<=>1:20 PM-2:10 PM(13:20-14:10)=>(800-850)
+/1000/60 : 1160-1210(minutes)	
+/60:%60 : 19:20 20:10
+
+57300000-60300000<=>9:55AM-10:45AM=>(595-645)
+/1000/60 : 955-1005(minutes)
+/60:%60 : 15:55 16:45
