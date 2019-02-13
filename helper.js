@@ -169,12 +169,12 @@ function getSchedule(allCourses, commutingMode, leastInterval, mostInterval){
 
 function findCourseComb(allCourses, n, schedule, result){
 	if(n==allCourses.length){
-		result.push(deepCopy(schedule);
+		result.push(deepCopy(schedule));
 		return ;
 	}
 	for(section in allCourses[n]){
 		if(schedule.addSection(section)){
-			findCourseComb(allCourses, n+1, schedule, result, commutingMode, leastInterval, mostInterval);
+			findCourseComb(allCourses, n+1, schedule, result);
 		}
 	}
 	return ;
