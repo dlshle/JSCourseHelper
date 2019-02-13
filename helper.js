@@ -163,6 +163,27 @@ function convertMeetingTime(time){
 
 function getSchedule(allCourses, commutingMode, leastInterval, mostInterval){
 	let schedule = new Schedule(commutingMode, leastInterval, mostInterval);
-	//TODO:make a function that tries every combination and finds the best one
+	let result = [];
+	findCourseComb(allCourses, 0, schedule, result);	
 }
 
+function findCourseComb(allCourses, n, schedule, result){
+	if(n==allCourses.length){
+		result.push(deepCopy(schedule);
+		return ;
+	}
+	for(section in allCourses[n]){
+		if(schedule.addSection(section)){
+			findCourseComb(allCourses, n+1, schedule, result, commutingMode, leastInterval, mostInterval);
+		}
+	}
+	return ;
+}
+
+function deepCopy(obj){
+	let result = {};
+	for(x in obj){
+		result.x = obj.x;
+	}
+	return result;
+}
